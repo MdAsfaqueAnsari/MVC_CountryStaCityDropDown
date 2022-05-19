@@ -1,0 +1,56 @@
+﻿@model MVC_CountryStaCityDropD.Models.Class1
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index MVC DropDownList</h2>
+
+@if (ViewBag.countrylist != null)
+{
+    @Html.DropDownListFor(m => m.CId, ViewBag.CountryList as SelectList, "--Select Country Name--", new { @class = "form-control" })
+
+}
+<br />
+@Html.DropDownListFor(m =>m.SId, new SelectList(""), "-- Select State--", new { @class = "form-control" })
+<br />
+@Html.DropDownListFor(m => m.CityId, new SelectList(""), "--Select Cities--", new { @class = "form-control" })
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#CId").change(function () {
+            var countryId = $(this).val();
+            debugger
+            $.ajax({
+                type: "post",
+                url: "/CoSaCi/GetStateList?CId=" + countryId,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    $("#SId").empty();
+                    $("#SId").append(response);
+                }
+            })
+
+        })
+    })
+
+   
+        $("#SId").change(function () {
+            var countryId = $(this).val();
+            debugger
+            $.ajax({
+                type: "post",
+                url: "/CoSaCi/GetCityList?SId=" + countryId,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    $("#CityId").empty();
+                    $("#CityId").append(response);
+                }
+            })
+
+        })
+</script>
+

@@ -1,0 +1,12 @@
+﻿@model MVC_CountryStaCityDropD.City
+
+<option value="">--Select Cities--</option>
+
+@if (ViewBag.Citylist != null)
+{
+    foreach (var item in ViewBag.Citylist)
+    {
+        <option value="@item.Value">@item.Text</option>
+    }
+}
+
